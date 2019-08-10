@@ -51,9 +51,6 @@ static final String BASE_URL = "http://localhost:8888/";
 
     @Test
     public void testSerializingAUserAndSavingFile() throws Exception{
-        SimpleModule module = new SimpleModule();
-        module.addSerializer(User.class, new UserSerializer());
-        objectMapper.registerModule(module);
         Map<String, Boolean> homeworks = new HashMap<>();
         homeworks.put("HW1", false);
         homeworks.put("HW2", true);
@@ -65,11 +62,7 @@ static final String BASE_URL = "http://localhost:8888/";
         assertTrue(response.code()==200);
         File file = new File("savedUser.json");
         assertTrue(file.exists());
-        Gson gson = new Gson();
-        BufferedReader br = new BufferedReader(new FileReader("savedUser.json"));
-            //newly created AccessId was in the savedUser.json. Yet jackson deserializer ignored that field.
-            //let's try gson and see it is there.
-        User saved = gson.fromJson(br, User.class);
+        User saved = objectMapper.readValue(file, User.class);
         assertEquals(saved.getName(), "Ivan");
         assertEquals(saved.getEmail(), "ivan@gmail.com");
         assertNotNull(saved.getAccessId());

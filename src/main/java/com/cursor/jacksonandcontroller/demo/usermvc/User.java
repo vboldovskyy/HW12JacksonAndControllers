@@ -1,6 +1,7 @@
 package com.cursor.jacksonandcontroller.demo.usermvc;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -23,5 +24,9 @@ public class User {
     @JsonIgnore
     public String getAccessId() {
         return accessId;
+    }
+    @JsonProperty
+    public void setAccessId(String accessId){
+        this.accessId=accessId;
     }
 }
